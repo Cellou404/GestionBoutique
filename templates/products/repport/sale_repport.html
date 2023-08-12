@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block title %} Repport {% endblock title %}
+
+{% block style %} 
+.asteriskField {
+    display: none;
+}
+thead {
+    position: sticky;
+    top: -1px;
+    background-color: white;
+  }
+{% endblock style %} 
+
+{% block content %}
+<div class="row g-3 mb-4 align-items-center justify-content-between">
+        <div class="col-md-4">
+            <h1 class="app-page-title mb-0">Historique Ventes</h1>
+        </div>
+        {# PAGE UTILITIES #}
+        {% include './pageUtilities.html' %}
+        <hr>
+        
+        {# SEACH ITEMS #}
+        {% include "./searchItems.html" %}
+        
+    </div><!--//row-->
+
+    {# DATA TABLE #}
+    {% include "./dataTable.html" %}
+
+{% endblock content %}

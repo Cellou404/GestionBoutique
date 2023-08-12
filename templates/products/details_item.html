@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block title %} Details {% endblock title %}
+
+{% block style %} 
+.asteriskField {
+    display: none;
+}
+{% endblock style %} 
+
+{% block content %}
+
+    <div class="row g-3 mb-4 align-items-center justify-content-between">
+        <div class="col-md-4">
+            <h1 class="app-page-title mb-0">{{item.designation}}</h1>
+        </div>
+        <div class="col-md-8">
+            <div class="page-utilities">
+                <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
+                    
+                    <!-- <div class="col-auto app-search-box col">
+                        <form class="app-search-form" method="GET">
+                            <input type="text" placeholder="Search..." name="searchItem" class="form-control search-input">
+                            <button type="submit" class="btn search-btn btn-primary" value="Search"><i class="fas fa-search"></i></button>
+                        </form>
+                    </div> -->
+                    <div class="col-auto">
+
+                        <select class="form-select w-auto">
+                            <option selected value="option-1">All</option>
+                            <option value="option-2">This week</option>
+                            <option value="option-3">This month</option>
+                            <option value="option-4">Last 3 months</option>
+
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <a class="btn app-btn-secondary" href="#">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
+                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                <path fill-rule="evenodd"
+                                    d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                            </svg>
+                            CSV
+                        </a>
+
+                        <a class="btn app-btn-secondary" href="{% url 'add_item' %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                              </svg>
+                            Add Item
+                        </a>
+                    </div>
+                </div><!--//row-->
+            </div><!--//table-utilities-->
+        </div><!--//col-auto-->
+        
+    </div><!--//row-->
+
+
+    <div class="tab-content" id="orders-table-tab-content">
+        <div class="app-card app-card-account shadow-sm ">
+            <div class="app-card-header p-3 border-bottom-0">
+                <div class="row align-items-center gx-3">
+                    <div class="col-auto">
+                        <div class="app-icon-holder" type='button' data-bs-toggle="modal" data-bs-target="#staticBackdropRecevoirItem">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                        </div><!--//icon-holder-->
+
+                    </div><!--//col-->
+                    <div class="col-auto">
+                        <h4 class="app-card-title">Recevoir ce item</h4>
+                    </div><!--//col-->
+                    <div class="col-auto">
+                        <div class="app-icon-holder" type='button' data-bs-toggle="modal" data-bs-target="#staticBackdropDelivreItem">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-dash-circle text-danger" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                </svg>
+                        </div><!--//icon-holder-->
+
+                    </div><!--//col-->
+                    <div class="col-auto">
+                        <h4 class="app-card-title text-danger">Délivrer ce item</h4>
+                    </div><!--//col-->
+                    
+                </div><!--//row-->
+                <p class="text-black-50 pt-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                    </svg>
+                    Vous pourez choisir de récevoir un item en augmantant sa quantité en stock ou délivrer un item à un client en dimuniant sa quantité dans le stock
+                </p>
+                <hr>
+                
+            </div>
+            <div class="app-card-body px-4 pb-4 w-100">
+            <table class="table">
+                <thead class="table-light">
+                    <tr>
+                        <th class="col">N°</th>
+                        <th class="col">Référence</th>
+                        <th class="col">Catégorie</th>
+                        <th class="col">Désignation</th>
+                        <th class="col">Quantité</th>
+                        <th class="col">Seuil d'alert</th>
+                        <th class="col">Date Mise à jour</th>
+                        <th class="col">Prix Unitaire(GNF)</th>
+                        <th class="col">Prix Total(GNF)</th>
+                        <th class="col">Actions</th>
+                    
+                    </tr>
+                </thead>
+                <tbody class="">
+                    <tr>
+                        <th scope="row">#</th>
+                        <td>{{ item.reference }}</td>
+                        <td>{{ item.categorie }}</td>
+                        <td>{{ item.designation }}</td>
+                        <td class="{% if item.quantite <= item.seuil_alert %} text-danger {% endif %} text-bolder">
+                            {{ item.quantite }}
+                        </td>
+                        <td data-toggle="tooltip" data-placement="top" title="Cliquez pour modifier le seuil d'alert"> 
+                            <a class="text-black" href="{% url 'reorder_level' item.id %}">{{ item.seuil_alert }}</a>
+                        </td>
+                        <td>{{ item.date_mise_a_jour }}</td>
+                        <td>{{ item.prix_vente | intcomma }}</td>
+                        <td>{{ total_price | intcomma }}</td>
+                        <td>
+                            <a class="text-center text-secondary me-2" href="{% url 'update_item' item.id %}" data-toggle="tooltip" data-placement="top" title="Cliquez pour éditer cet item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                </svg>
+                            </a>
+                            <a class="text-center text-danger" href="{% url 'delete_item' item.id %}" data-toggle="tooltip" data-placement="top" title="Cliquez pour supprimer cet item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                                </svg>
+                            </a>
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+    <!-- Issue Modal -->  
+    {% include "products/issue_modal.html" %}
+
+    <!-- Receive Modal -->  
+    {% include "products/receive_modal.html" %}
+        
+
+    </div><!--//tab-content-->
+
+
+{% endblock content %}

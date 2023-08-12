@@ -1,0 +1,11 @@
+{% autoescape off %}
+
+Bienvenue dans GB-SALIOU
+
+Hello {{name}}
+
+Finalisez la création de votre compte en cliquant sur le lien ci-dessous.
+
+Lien de Confirmation: http://{{domain}}{% url 'activate' uidb64=uid token=token %}
+
+{% endautoescape %}

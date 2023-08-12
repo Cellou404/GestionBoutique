@@ -1,0 +1,42 @@
+
+
+<nav class="app-pagination">
+    {% if stock.has_other_pages %}
+        <ul class="pagination justify-content-center">
+            {% if stock.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ stock.previous_page_number }}" tabindex="-1" aria-disabled="true">
+                        <i class="fas fa-angle-double-left"></i>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% if stock.number|add:'-3' > 1 %}
+                <li class="page-item"><a class="page-link" href="?page={{stock.number|add:'-2'}}">&hellip;</a></li>
+            {% endif %}
+
+            {% for i in stock.paginator.page_range %}
+                {% if stock.number == i %}
+                    <li class="page-item active"><a class="page-link disabled"> {{i}} </a></li>
+                {% elif i > stock.number|add:'-3' and i < stock.number|add:'2' %}
+                    <li class="page-item"><a class="page-link" href="?page={{i}}"> {{i}} </a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if stock.paginator.num_pages > stock.number|add:'2' %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{stock.number|add:'-2'}}">&hellip; </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{stock.paginator.num_pages}}"> {{stock.paginator.num_pages}} </a>
+                </li>
+            {% endif %}
+
+            {% if stock.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ stock.next_page_number }}"> <i class="fas fa-angle-double-right"></i></a>
+                </li>
+            {% endif %}
+        </ul>
+    {% endif %}
+</nav><!--//app-pagination-->
